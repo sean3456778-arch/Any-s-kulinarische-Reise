@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ed2638">
+  <title>Any’s kulinarische Reise</title>
+  <style>
+    :root {
+      --red: #ed2638;
+      --red-dark: #a50f23;
+      --ink: #151515;
+      --paper: #fff9ee;
+      --yellow: #ffe45c;
+      --blue: #53d8e8;
+      --white: #fff;
+      --shadow: 7px 7px 0 var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 12%, #ff6470 0 2px, transparent 3px) 0 0 / 24px 24px,
+        var(--red);
+      font-family: "Trebuchet MS", system-ui, sans-serif;
+    }
+
+    button, a { font: inherit; }
+
+    a { color: inherit; }
+
+    .site-shell {
+      width: min(1120px, calc(100% - 28px));
+      margin: 20px auto;
+      border: 4px solid var(--ink);
+      background: var(--paper);
+      box-shadow: 12px 12px 0 var(--ink);
+      overflow: hidden;
+      transform: rotate(-.25deg);
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 13px 22px;
+      color: var(--white);
+      background: var(--ink);
+      border-bottom: 4px solid var(--ink);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .brand-mark { color: var(--yellow); }
+
+    .topbar a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: .88rem;
+    }
+
+    .hero {
+      position: relative;
+      padding: clamp(30px, 7vw, 76px);
+      background:
+        linear-gradient(125deg, transparent 0 67%, rgba(255,255,255,.12) 67% 70%, transparent 70%),
+        var(--red);
+      color: var(--white);
+      border-bottom: 4px solid var(--ink);
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "YUM!";
+      position: absolute;
+      right: 4%;
+      bottom: 4%;
+      color: var(--yellow);
+      font-size: clamp(2.8rem, 10vw, 7rem);
+      line-height: 1;
+      font-weight: 1000;
+      font-style: italic;
+      transform: rotate(-12deg);
+      -webkit-text-stroke: 2px var(--ink);
+      text-shadow: 5px 5px 0 var(--ink);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 6px 10px;
+      color: var(--ink);
+      background: var(--yellow);
+      border: 2px solid var(--ink);
+      box-shadow: 3px 3px 0 var(--ink);
+      font-size: .76rem;
+      font-weight: 1000;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      transform: rotate(-2deg);
+    }
+
+    h1 {
+      max-width: 760px;
+      margin: 18px 0 12px;
+      font-size: clamp(2.8rem, 8vw, 6.5rem);
+      line-height: .86;
+      letter-spacing: -.07em;
+      text-transform: uppercase;
+      text-shadow: 4px 4px 0 var(--ink);
+    }
+
+    .hero p {
+      max-width: 570px;
+      margin: 20px 0 0;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      line-height: 1.55;
+    }
+
+    main { padding: clamp(20px, 5vw, 48px); }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 14px;
+      margin: 0 0 22px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(1.8rem, 4vw, 3.1rem);
+      line-height: .95;
+      text-transform: uppercase;
+      letter-spacing: -.05em;
+    }
+
+    .section-note {
+      max-width: 290px;
+      margin: 0;
+      font-size: .9rem;
+      font-weight: 700;
+      text-align: right;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 26px 0 38px;
+    }
+
+    .stat {
+      padding: 17px;
+      border: 3px solid var(--ink);
+      box-shadow: 4px 4px 0 var(--ink);
+      background: var(--white);
+      transform: rotate(-1deg);
+    }
+
+    .stat:nth-child(2) {
+      background: var(--yellow);
+      transform: rotate(1deg);
+    }
+
+    .stat:nth-child(3) {
+      background: var(--blue);
+      transform: rotate(-.5deg);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: clamp(1.7rem, 4vw, 2.6rem);
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 7px;
+      font-size: .82rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .challenge-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .challenge-card {
+      position: relative;
+      display: flex;
+      min-height: 280px;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 23px;
+      border: 4px solid var(--ink);
+      background: var(--white);
+      box-shadow: var(--shadow);
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+
+    .challenge-card:nth-child(2) {
+      background: #fff1d4;
+      transform: rotate(1deg);
+    }
+
+    .challenge-card:nth-child(1) {
+      transform: rotate(-.8deg);
+    }
+
+    .challenge-card:hover {
+      transform: translate(-3px, -3px) rotate(0);
+      box-shadow: 10px 10px 0 var(--ink);
+    }
+
+    .card-topline {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 9px;
+      border: 2px solid var(--ink);
+      background: var(--yellow);
+      font-size: .72rem;
+      font-weight: 1000;
+      text-transform: uppercase;
+      transform: rotate(-2deg);
+    }
+
+    .badge.done { background: #83f0b2; }
+
+    .food-icon {
+      font-size: 2rem;
+      filter: drop-shadow(2px 2px 0 var(--ink));
+    }
+
+    .challenge-card h3 {
+      margin: 18px 0 8px;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .challenge-card p {
+      margin: 0 0 18px;
+      line-height: 1.5;
+    }
+
+    .result-line {
+      display: inline-block;
+      margin-top: auto;
+      padding: 9px 12px;
+      color: var(--white);
+      background: var(--ink);
+      font-weight: 1000;
+      text-transform: uppercase;
+      transform: skew(-5deg);
+    }
+
+    .open-card {
+      margin-top: 18px;
+      padding: 10px 14px;
+      color: var(--white);
+      background: var(--red);
+      border: 2px solid var(--ink);
+      box-shadow: 3px 3px 0 var(--ink);
+      font-weight: 1000;
+      text-decoration: none;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .open-card:hover { background: var(--red-dark); }
+
+    .fine-print {
+      margin: 28px 0 0;
+      padding: 14px;
+      border-left: 5px solid var(--red);
+      background: #fff;
+      font-size: .88rem;
+      line-height: 1.5;
+    }
+
+    #detail-view { display: none; }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 22px;
+      color: var(--red-dark);
+      font-weight: 1000;
+      text-decoration-thickness: 2px;
+      text-transform: uppercase;
+    }
+
+    .detail-panel {
+      padding: clamp(20px, 5vw, 42px);
+      border: 4px solid var(--ink);
+      background: var(--white);
+      box-shadow: var(--shadow);
+    }
+
+    .detail-panel h2 {
+      margin: 15px 0;
+      font-size: clamp(2.2rem, 6vw, 4.6rem);
+    }
+
+    .detail-lead {
+      max-width: 720px;
+      font-size: 1.12rem;
+      line-height: 1.65;
+    }
+
+    .detail-result {
+      display: inline-block;
+      margin: 10px 0 22px;
+      padding: 13px 17px;
+      color: var(--white);
+      background: var(--red);
+      border: 3px solid var(--ink);
+      box-shadow: 4px 4px 0 var(--ink);
+      font-size: 1.25rem;
+      font-weight: 1000;
+      text-transform: uppercase;
+      transform: rotate(-1deg);
+    }
+
+    .detail-box {
+      margin-top: 14px;
+      padding: 18px;
+      background: #fff3c5;
+      border: 3px dashed var(--ink);
+      line-height: 1.6;
+    }
+
+    .video-link {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 13px 17px;
+      color: var(--white);
+      background: #7b1fa2;
+      border: 3px solid var(--ink);
+      box-shadow: 4px 4px 0 var(--ink);
+      font-weight: 1000;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .video-link:hover { background: #5c137b; }
+
+    footer {
+      padding: 18px 22px;
+      color: var(--white);
+      background: var(--ink);
+      font-size: .82rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    @media (max-width: 680px) {
+      .site-shell { width: min(100% - 16px, 1120px); margin: 10px auto; }
+      .topbar { padding: 12px; font-size: .78rem; }
+      .hero { padding: 34px 22px 76px; }
+      .hero::after { bottom: 8px; right: 12px; }
+      main { padding: 24px 18px; }
+      .stats { grid-template-columns: 1fr; gap: 11px; }
+      .stat { transform: none !important; }
+      .challenge-grid { grid-template-columns: 1fr; gap: 18px; }
+      .challenge-card { min-height: 250px; }
+      .section-heading { align-items: flex-start; flex-direction: column; }
+      .section-note { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+  <div class="site-shell">
+    <header class="topbar">
+      <a href="#home"><span class="brand-mark">◆ ANY’S</span> / FOOD QUEST LOG</a>
+      <span>MISSION: IMBISS</span>
+    </header>
+
+    <section class="hero">
+      <span class="eyebrow">Das inoffizielle Challenge-Archiv</span>
+      <h1>Any’s<br>kulinarische<br>Reise</h1>
+      <p>
+        Große Teller. Große Ansagen. Noch größere Portionen.
+        Hier werden Anys Restaurant-Challenges festgehalten –
+        jeder Besuch ein neues Kapitel auf der Speisekarte des Schicksals.
+      </p>
+    </section>
+
+    <main>
+      <section id="overview-view">
+        <div class="section-heading">
+          <h2>Die bisherigen<br>Missionen</h2>
+          <p class="section-note">Zwei Challenges. Zwei Siege. Der Appetit macht keine Pause.</p>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <strong>02</strong>
+            <span>abgeschlossene Challenges</span>
+          </div>
+          <div class="stat">
+            <strong>20</strong>
+            <span>Schnitzel bezwungen</span>
+          </div>
+          <div class="stat">
+            <strong>12</strong>
+            <span>Burger-Patties im Tower</span>
+          </div>
+        </div>
+
+        <div class="challenge-grid" id="challenge-grid"></div>
+
+        <p class="fine-print">
+          <strong>Wertungshinweis:</strong> Schnitzel und Burger-Patties sind
+          unterschiedliche Challenges – die Zahlen werden deshalb getrennt
+          angezeigt und nicht zu einer Gesamtmenge zusammengerechnet.
+        </p>
+      </section>
+
+      <section id="detail-view" aria-live="polite">
+        <a class="back-link" href="#home">← Zurück zur Übersicht</a>
+        <div id="detail-content"></div>
+      </section>
+    </main>
+
+    <footer>
+      ANY’S KULINARISCHE REISE · Ein Bissen nach dem anderen · Fortsetzung folgt …
+    </footer>
+  </div>
+
+  <script>
+    const challenges = [
+      {
+        id: "cafe-del-sol",
+        restaurant: "Cafe del Sol",
+        title: "Schnitzel-Soßen-Marathon",
+        icon: "🍽️",
+        result: "20 Schnitzel geschafft",
+        short: "Zwanzig Schnitzel, verschiedene Soßen – eine Mission mit ordentlich Ausdauer.",
+        intro: "Die Mission im Cafe del Sol: 20 Schnitzel und dazu unterschiedliche Soßen. Any hat sich durch die Challenge gekämpft und das Ziel erreicht.",
+        flavor: "Ein Schnitzel nach dem anderen – und mit jeder Soße ein neuer Abschnitt der kulinarischen Quest. Am Ende steht ein klares Ergebnis: Challenge geschafft.",
+        clip: "https://www.twitch.tv/muchukuluku/clip/WiseSavoryPuppyMrDestructoid-hIBISZbzh4MFAWuC"
+      },
+      {
+        id: "volksburger",
+        restaurant: "Volksburger",
+        title: "Burger Tower",
+        icon: "🍔",
+        result: "12 Patties geschafft",
+        short: "Ein Burger-Tower mit zwölf Patties. Hoch hinaus – und bis zum letzten Patty durchgezogen.",
+        intro: "Bei Volksburger wartete der Burger Tower: zwölf Patties zwischen den Brötchen. Any hat den Turm bezwungen und die Challenge geschafft.",
+        flavor: "Etage um Etage wächst der Burger zur Bossfight-Portion. Der Tower steht – aber Any hat sich durchgebissen und den Sieg eingetragen.",
+        clip: "https://www.twitch.tv/muchukuluku/clip/HealthyCooperativeVelociraptorGivePLZ-kBaEVALShOY8jXJr"
+      }
+    ];
+
+    const grid = document.getElementById("challenge-grid");
+    const overview = document.getElementById("overview-view");
+    const detailView = document.getElementById("detail-view");
+    const detailContent = document.getElementById("detail-content");
+
+    function renderCards() {
+      grid.innerHTML = challenges.map(item => `
+        <article class="challenge-card">
+          <div class="card-topline">
+            <span class="badge done">✓ Mission geschafft</span>
+            <span class="food-icon" aria-hidden="true">${item.icon}</span>
+          </div>
+          <h3>${item.restaurant}</h3>
+          <p>${item.short}</p>
+          <span class="result-line">${item.result}</span>
+          <a class="open-card" href="#challenge/${item.id}">Challenge ansehen →</a>
+        </article>
+      `).join("");
+    }
+
+    function showRoute() {
+      const route = location.hash.replace(/^#/, "");
+
+      if (!route || route === "home") {
+        overview.style.display = "block";
+        detailView.style.display = "none";
+        return;
+      }
+
+      const id = route.replace("challenge/", "");
+      const item = challenges.find(challenge => challenge.id === id);
+
+      if (!item) {
+        location.hash = "home";
+        return;
+      }
+
+      overview.style.display = "none";
+      detailView.style.display = "block";
+      detailContent.innerHTML = `
+        <article class="detail-panel">
+          <span class="badge done">✓ Challenge abgeschlossen</span>
+          <h2>${item.icon} ${item.restaurant}</h2>
+          <h3>${item.title}</h3>
+          <p class="detail-lead">${item.intro}</p>
+          <div class="detail-result">${item.result}</div>
+
+          <div class="detail-box">
+            <strong>Das Kapitel:</strong><br>
+            ${item.flavor}
+          </div>
+
+          <div class="detail-box">
+            <strong>Der Clip-Beweis:</strong><br>
+            Der Besuch wurde als Twitch-Clip festgehalten.
+            <br>
+            <a class="video-link" href="${item.clip}" target="_blank" rel="noopener noreferrer">
+              ▶ Challenge-Clip auf Twitch ansehen
+            </a>
+          </div>
+        </article>
+      `;
+    }
+
+    renderCards();
+    window.addEventListener("hashchange", showRoute);
+    showRoute();
+  </script>
+</body>
+</html>
